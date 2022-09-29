@@ -28,6 +28,11 @@ Given the user loads the layout "xo"
 When the user presses the cell '1-1'
 Then the user loses the game
 
+Scenario: Winning the game by revealing cells
+Given the user loads the layout "xo"
+When the user clicks at the cell '1-2'
+Then the user wins
+
 Scenario: Revealing cell with a bomb > Showing the mine [MINED CELL]
 Given the user loads the layout "xo"
 When the user presses the cell '1-1'
@@ -62,21 +67,22 @@ Given the user loads the "ooo-ooo-ooo" layout
 When the user reveals the cell "2/2"
 Then the cell "2-2" should be "empty"
 
-Scenario Outline: Revealing an empty cell > Revealing the surrounding cells
-Given the user loads the "<defaultLayout>"
-When the user clicks the cell "<cell>"
-Then should show the "<output>"
+#Scenario Outline: Revealing an empty cell > Revealing the surrounding cells
+#Given the user loads the "<defaultLayout>"
+#When the user clicks the cell "<cell>"
+#Then should show the "<output>"
 
-Examples:
-|  defaultLayout  | cell | output       |
-|   xoo-ooo-ooo   | 1-2  | ooo-1oo-ooo  |
-|   xxo-ooo-ooo   | 1-2  | ooo-2oo-ooo  |
-|   xxx-ooo-ooo   | 1-2  | ooo-3oo-ooo  |
-|   xxx-oxo-ooo   | 1-2  | ooo-4oo-ooo  |
-|   xxx-xox-ooo   | 2-2  | ooo-o5o-ooo  |
-|   xxx-xox-xoo   | 2-2  | ooo-o6o-ooo  |
-|   xxx-xxx-xoo   | 3-2  | ooo-ooo-o7o  |
-|   xxx-xxx-xox   | 3-2  | ooo-ooo-o8o  |
+#Examples:
+#|  defaultLayout  | cell | output       |
+#|   xoo-ooo-ooo   | 1-2  | ooo-1oo-ooo  |
+#|   xxo-ooo-ooo   | 1-2  | ooo-2oo-ooo  |
+#|   xxx-ooo-ooo   | 1-2  | ooo-3oo-ooo  |
+#|   xxx-oxo-ooo   | 1-2  | ooo-4oo-ooo  |
+#|   xxx-xox-ooo   | 2-2  | ooo-o5o-ooo  |
+#|   xxx-xox-xoo   | 2-2  | ooo-o6o-ooo  |
+#|   xxx-xxx-xoo   | 3-2  | ooo-ooo-o7o  |
+#|   xxx-xxx-xox   | 3-2  | ooo-ooo-o8o  |
+
 
 Scenario Outline: Revealing an empty cell > Revealing the surrounding cells
 Given the user loads the "defaultLayout"
@@ -87,7 +93,8 @@ Examples:
 |  defaultLayout                    | cell | output                         |
 |   ooo-ooo-ooo                     | 2-2  | ...-...-...                    |
 |   xxxxx-xooox-xooox-xooox-xxxxx   | 3-3  | _____-_555_-_5.5_-_555_-_____  |
-|   xooo-oooo-oooo-oooo             | 4-4  | .1__-11__-____-____            |
+|   xooo-oooo-oooo-oooo             | 4-4  | _1__-11__-____-____            |
+|   xoo-xxo-ooo                     | 2-3  | ___-__3-___                    |
 
 
 Scenario: An empty cell is revealead by a neighbour > Revealing again adjacent mines
@@ -110,8 +117,6 @@ Scenario: Sad face
 Given the user lose the game
 Then the face should be 'sad'
 
-
-
 Scenario: Restarting the game by playing
 Given the user is still playing and wants to restart
 When the user clicks the button 'normal face' 
@@ -122,32 +127,29 @@ Given the user lost and wants to play again
 When the user clicks the 'sad face' button
 Then the game restarts
 
-Scenario: Winning the game by revealing cells
-Given the user loads the layout "xo"
-When the user clicks at the cell '1-2'
-Then the user wins and has to restart the game for playing again
-
 Scenario: Untagging Flag tag
 Given the user loads the default layout
-When the user marks the cell '1-1' with flag tag by clicking Right Click twice
+When the user marks the cell '1-1' with "<Flag tag>"
 Then the remaining flags counter should show "9"
+And the cell '1-1' shows "<Flag tag>"
 
 Scenario: Tagging Flag tag
 Given the user loads the default layout
-When the user unmarks the cell '1-1' with flag tag by clicking Right Click twice
+When the user unmarks the cell '1-1' with "<Flag tag>"
 Then the remaining flags counter should show "10"
+And the cell '1-1' shows "nothing"
 
 Scenario: Untagging questionable mark
 Given the user loads the default layout
-When the user marks the cell '1-1' with question mark by clicking Right Click
+When the user marks the cell '1-1' with "<Questionable mark>"
 Then the remaining flags counter should show "9"
+And the cell '1-1' shows "<Questionable mark>"
 
 Scenario: Tagging questionable mark
 Given the user loads the default layout
-When the user unmarks the cell '1-1' with question mark by clicking Right Click
+When the user unmarks the cell '1-1' with "<Questionable mark>"
 Then the remaining flags counter should show "10"
-
-
+And the cell "1-1" shows "nothing"
 
 Scenario Outline: Revealing around cells by clicking
 Given the user loads the "<defaultLayout>"
@@ -165,5 +167,5 @@ Examples:
 |   xxx-xxx-xoo   | 3-2  | ooo-ooo-o7o  |
 |   xxx-xxx-xox   | 3-2  | ooo-ooo-o8o  |
 
-/Scenario: Revealing an empty cell (neighbours)
-/Definition of an empty cell
+#Scenario: Revealing an empty cell (neighbours)
+#Definition of an empty cell

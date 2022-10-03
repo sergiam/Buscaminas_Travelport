@@ -97,7 +97,7 @@ Examples:
 |   xoo-xxo-ooo                     | 2-3  | ___-__3-___                    |
 
 
-Scenario: An empty cell is revealead by a neighbour > Revealing again adjacent mines
+#Scenario: An empty cell is revealead by a neighbour > Revealing again adjacent mines
 
 
 Scenario: Default display screen: All the cells must be covered
@@ -151,21 +151,25 @@ When the user unmarks the cell '1-1' with "<Questionable mark>"
 Then the remaining flags counter should show "10"
 And the cell "1-1" shows "nothing"
 
-Scenario Outline: Revealing around cells by clicking
-Given the user loads the "<defaultLayout>"
-When the user clicks the cell "<cell>"
-Then should show the "<output>"
+Scenario: Restarting the game: all cells covered
+Given the user loads the default layout
+And the user marks the cell '1-1' with a "<Flag tag>"
+And the user reveals the cell '3-2'
+When the user restart the game
+Then all cells should be covered
 
-Examples:
-|  defaultLayout  | cell | output       |
-|   xoo-ooo-ooo   | 1-2  | ooo-1oo-ooo  |
-|   xxo-ooo-ooo   | 1-2  | ooo-2oo-ooo  |
-|   xxx-ooo-ooo   | 1-2  | ooo-3oo-ooo  |
-|   xxx-oxo-ooo   | 1-2  | ooo-4oo-ooo  |
-|   xxx-xox-ooo   | 2-2  | ooo-o5o-ooo  |
-|   xxx-xox-xoo   | 2-2  | ooo-o6o-ooo  |
-|   xxx-xxx-xoo   | 3-2  | ooo-ooo-o7o  |
-|   xxx-xxx-xox   | 3-2  | ooo-ooo-o8o  |
+Scenario: Restarting the game: time resetting
+Given the user loads the default layout
+And the user reveals the cell '1-1'
+And the user waits '10' seconds
+And the user wants to restart the game
+When the user restart the game
+Then the timer counter should show "0"
+
+Scenario: Time counter when user starts revealing a cell
+Given the user loads the default layout
+When the user reveals the cell '2-2'
+Then the time counter should start increasing
 
 #Scenario: Revealing an empty cell (neighbours)
 #Definition of an empty cell

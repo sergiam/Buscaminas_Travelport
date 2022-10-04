@@ -92,37 +92,39 @@ Then should show the "<output>"
 Examples:
 |  defaultLayout                    | cell | output                         |
 |   ooo-ooo-ooo                     | 2-2  | ...-...-...                    |
-|   xxxxx-xooox-xooox-xooox-xxxxx   | 3-3  | _____-_555_-_5.5_-_555_-_____  |
-|   xooo-oooo-oooo-oooo             | 4-4  | _1__-11__-____-____            |
-|   xoo-xxo-ooo                     | 2-3  | ___-__3-___                    |
+|   xxxxx-xooox-xooox-xooox-xxxxx   | 3-3  | .....-.555.-.5.5.-.555.-.....  |
+|   xooo-oooo-oooo-oooo             | 4-4  | .1..-11..-....-....            |
+|   xoo-xxo-ooo                     | 2-3  | ...-..3-...                    |
 
 
 #Scenario: An empty cell is revealead by a neighbour > Revealing again adjacent mines
 
 
 Scenario: Default display screen: All the cells must be covered
+Given the user loads the default layout
 Then All the cells should be "covered"
 
 Scenario: Default display screen: Default time counter
+Given the user loads the default layout
 Then the timer should be "0"
 
 Scenario: Default display screen: Default face
-Then the face should be 'normal'
+Then the face should be 'normal face'
 
 Scenario: Smile face
 Given the user wins the game
-Then the face should be 'smile'
+Then the face should be 'smile face'
 
 Scenario: Sad face
 Given the user lose the game
-Then the face should be 'sad'
+Then the face should be 'sad face'
 
-Scenario: Restarting the game by playing
+Scenario: Restarting the game when user is still playing
 Given the user is still playing and wants to restart
 When the user clicks the button 'normal face' 
 Then the game restarts
 
-Scenario: Restarting the game by losing
+Scenario: Restarting the game when user already lost
 Given the user lost and wants to play again
 When the user clicks the 'sad face' button
 Then the game restarts
@@ -166,10 +168,20 @@ And the user wants to restart the game
 When the user restart the game
 Then the timer counter should show "0"
 
+Scenario: Restarting the game: flag counter
+Given the user loads the default layout
+And the user marks the cell '1-1' with a "<Flag tag>"
+When the user restart the game
+Then the remaining flags counter should show "10"
+
 Scenario: Time counter when user starts revealing a cell
 Given the user loads the default layout
 When the user reveals the cell '2-2'
 Then the time counter should start increasing
+
+Scenario: Revealing a cell with the mouse
+When the user presses left mouse button on the cell
+Then the cell should be "revealed"
 
 #Scenario: Revealing an empty cell (neighbours)
 #Definition of an empty cell

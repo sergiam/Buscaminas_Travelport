@@ -36,11 +36,11 @@ Then the user wins
 Scenario: Revealing cell with a bomb > Showing the mine [MINED CELL]
 Given the user loads the layout "xo"
 When the user presses the cell '1-1'
-Then the cell "1/1" should show "mine"
+Then the cell "1-1" should show "mine"
 
 Scenario: Default display screen: bomb counter
 Given the user loads the "<defaultLayout>"
-Then the bomb counters should be "<number>"
+Then the bomb counter should be "<number>"
 
 Examples:
 |  defaultLayout  | number      |
@@ -51,7 +51,7 @@ Examples:
 
 Scenario: Clicking a cell without a bomb, showing number of surrounding mines [NUM CELL]
 Given the user loads the "<defaultLayout>"
-When the user reveals the cell "2/2"
+When the user reveals the cell "2-2"
 Then the cell "2-2" should show "number"
 
 Examples:
@@ -174,7 +174,7 @@ And the user marks the cell '1-1' with a "<Flag tag>"
 When the user restart the game
 Then the remaining flags counter should show "10"
 
-Scenario: Time counter when user starts revealing a cell
+Scenario: Time counter starts when user reveals a cell
 Given the user loads the default layout
 When the user reveals the cell '2-2'
 Then the time counter should start increasing
@@ -182,6 +182,16 @@ Then the time counter should start increasing
 Scenario: Revealing a cell with the mouse
 When the user presses left mouse button on the cell
 Then the cell should be "revealed"
+
+Scenario: Showing bombs when user loses the game
+Given the user loads the "<inputLayout>" layout
+When the user reveals the cell "3-3"
+Then the display should show "<outputLayout>"
+
+Examples:
+| inputLayout | outputLayout |
+| xoo-oxx-oox | x..-.xx-..x  |
+| xxx-xoo-oxx | xxx-x..-.xx  |
 
 #Scenario: Revealing an empty cell (neighbours)
 #Definition of an empty cell

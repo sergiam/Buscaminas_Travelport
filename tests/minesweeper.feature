@@ -192,6 +192,8 @@ Examples:
 | inputLayout | outputLayout |
 | xoo-oxx-oox | x..-.xx-..x  |
 | xxx-xoo-oxx | xxx-x..-.xx  |
+| xox-xxx-xxx | x.x-xxx-xxx  |
+| xxx-ooo-xxx | xxx-...-xxx  |
 
 #Scenario: Revealing an empty cell (neighbours)
 #Definition of an empty cell

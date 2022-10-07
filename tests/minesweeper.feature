@@ -23,6 +23,7 @@ Feature: Minesweeper
 Background: 
 Given a user enters to the page
 
+@current
 Scenario: Revealing cell with a bomb > Game Over
 Given the user loads the layout "xo"
 When the user presses the cell '1-1'

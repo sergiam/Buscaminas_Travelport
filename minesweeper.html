@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" href="style.css">
 <title>Minesweeper</title>
+
 </head>
 
 <body>
   
-  <div class="minesweeper-board">
-
+  <div id="minesweeper-board">
+    
+    <div id="board-top-content">
+      
       <div id="time-counter" data-testid="">Time Counter</div>
 
       <div id="mine-counter" data-testid="">Mine Counter</div>
+    
+    </div>
+    <table id="board-inside-content">
+    </table>
+  
   </div>
 
   <script src= "script/minesweeper.js"></script>

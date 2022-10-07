@@ -5,6 +5,18 @@ let mineCounter = 10;
 
 create_Table();
 
+
+function initGame(mockdata){
+    const params = new URLSearchParams(window.location.search);
+    const mockDataValue = params.get(mockdata);
+    if (mockDataValue.includes('-')) {
+        mockDataValue = mockDataValue.split("-");
+    } else if (mockDataValue.includes (' ')) {
+        mockDataValue = mockDataValue.split(' ')
+    }
+    return mockDataValue;
+}
+
 function create_Table() {
 
 

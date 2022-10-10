@@ -23,6 +23,7 @@ Feature: Minesweeper
 Background: 
 Given a user enters to the page
 
+@current
 Scenario: Revealing cell with a bomb > Game Over
 Given the user loads the layout "xo"
 When the user presses the cell '1-1'
@@ -111,7 +112,7 @@ Then the timer should be "0"
 Scenario: Default display screen: Default face
 Then the face should be 'normal face'
 
-Scenario: Smile face
+Scenario: Winning game > Smile face
 Given the user wins the game
 Then the face should be 'smile face'
 
@@ -120,34 +121,44 @@ Given the user lose the game
 Then the face should be 'sad face'
 
 Scenario: Restarting the game when user is still playing
-Given the user is still playing and wants to restart
-When the user clicks the button 'normal face' 
-Then the game restarts
+Given la lio parda en el tablero
+When the user resets the game
+Then todas las celdas tapadas
+todas las cedas sin tags
+todas las celdas activas
+contador a valor por defecto
+timer vacio
+cara??
+
+Scenario Reseting the game with face button
+Given la lio parda en el tablero
+When the user resets the game
+Then the game should be reset
 
 Scenario: Restarting the game when user already lost
-Given the user lost and wants to play again
+Given the user lost
 When the user clicks the 'sad face' button
 Then the game restarts
 
-Scenario: Untagging Flag tag
+Scenario: tagging Flag tag
 Given the user loads the default layout
 When the user marks the cell '1-1' with "<Flag tag>"
 Then the remaining flags counter should show "9"
 And the cell '1-1' shows "<Flag tag>"
 
-Scenario: Tagging Flag tag
+Scenario: untagging Flag tag
 Given the user loads the default layout
 When the user unmarks the cell '1-1' with "<Flag tag>"
 Then the remaining flags counter should show "10"
 And the cell '1-1' shows "nothing"
 
-Scenario: Untagging questionable mark
+Scenario: tagging questionable mark
 Given the user loads the default layout
 When the user marks the cell '1-1' with "<Questionable mark>"
-Then the remaining flags counter should show "9"
+Then the remaining flags counter should show "10"
 And the cell '1-1' shows "<Questionable mark>"
 
-Scenario: Tagging questionable mark
+Scenario: unTagging questionable mark
 Given the user loads the default layout
 When the user unmarks the cell '1-1' with "<Questionable mark>"
 Then the remaining flags counter should show "10"
@@ -160,10 +171,11 @@ And the user reveals the cell '3-2'
 When the user restart the game
 Then all cells should be covered
 
+@manual
 Scenario: Restarting the game: time resetting
 Given the user loads the default layout
 And the user reveals the cell '1-1'
-And the user waits '10' seconds
+And the user waits some seconds
 And the user wants to restart the game
 When the user restart the game
 Then the timer counter should show "0"
@@ -174,7 +186,8 @@ And the user marks the cell '1-1' with a "<Flag tag>"
 When the user restart the game
 Then the remaining flags counter should show "10"
 
-Scenario: Time counter starts when user reveals a cell
+@manual
+Scenario: Time counter starts when user reveals a cell //???? puede empezar tb cuando añado una banderita o un ?
 Given the user loads the default layout
 When the user reveals the cell '2-2'
 Then the time counter should start increasing

@@ -2,6 +2,7 @@ const columns = 8;
 const rows = 8;
 let mineCounter = 10;
 
+initGame();
 
 //Toni's functions for validating and parsing the mockdata
 export const parseMockDataToString = (data) => {
@@ -71,9 +72,13 @@ export const createBoardFromMockData = (data) => {
     console.log('board', board)
     minefieldNumbering(board)
     return board
-  }
-create_Table();
+}
 
+export const loadMockData = async (mockData) => {
+  const text = screen.getElementById('text-mockdata-loader')
+  const button = screen.getElementById('button-mockdata-loader')
+  
+}
 
 function initGame(mockdata){
     const params = new URLSearchParams(window.location.search);

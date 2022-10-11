@@ -20,7 +20,7 @@ Feature: Minesweeper
     8 means a cell with 8 adjacents mines
   '
 
-Background: 
+Background:
 Given a user enters to the page
 
 @current
@@ -65,7 +65,7 @@ Examples:
 
 Scenario: Cell without mine and without surrounding mines > Empty cell [EMPTY CELL]
 Given the user loads the "ooo-ooo-ooo" layout
-When the user reveals the cell "2/2"
+When the user reveals the cell "2-2"
 Then the cell "2-2" should be "empty"
 
 #Scenario Outline: Revealing an empty cell > Revealing the surrounding cells
@@ -86,8 +86,8 @@ Then the cell "2-2" should be "empty"
 
 
 Scenario Outline: Revealing an empty cell > Revealing the surrounding cells
-Given the user loads the "defaultLayout"
-When the user clicks the cell "2-2"
+Given the user loads the "<defaultLayout>"
+When the user clicks the cell "<cell>"
 Then should show the "<output>"
 
 Examples:
@@ -120,19 +120,10 @@ Scenario: Sad face
 Given the user lose the game
 Then the face should be 'sad face'
 
-Scenario: Restarting the game when user is still playing
-Given la lio parda en el tablero
-When the user resets the game
-Then todas las celdas tapadas
-todas las cedas sin tags
-todas las celdas activas
-contador a valor por defecto
-timer vacio
-cara??
-
-Scenario Reseting the game with face button
-Given la lio parda en el tablero
-When the user resets the game
+Scenario: Reseting the game with face button
+Given the user loads the "xxo-oox-xxx" layout
+When the user reveals the cell '2-1'
+And clicks the "face" button
 Then the game should be reset
 
 Scenario: Restarting the game when user already lost
@@ -141,31 +132,31 @@ When the user clicks the 'sad face' button
 Then the game restarts
 
 Scenario: tagging Flag tag
-Given the user loads the default layout
+Given the user loads the "oox-xxo-xoo" layout
 When the user marks the cell '1-1' with "<Flag tag>"
 Then the remaining flags counter should show "9"
 And the cell '1-1' shows "<Flag tag>"
 
 Scenario: untagging Flag tag
-Given the user loads the default layout
+Given the user loads the "oox-xxo-xoo" layout
 When the user unmarks the cell '1-1' with "<Flag tag>"
 Then the remaining flags counter should show "10"
 And the cell '1-1' shows "nothing"
 
 Scenario: tagging questionable mark
-Given the user loads the default layout
+Given the user loads the "oox-xxo-xoo" layout
 When the user marks the cell '1-1' with "<Questionable mark>"
 Then the remaining flags counter should show "10"
 And the cell '1-1' shows "<Questionable mark>"
 
 Scenario: unTagging questionable mark
-Given the user loads the default layout
+Given the user loads the "oox-xxo-xoo" layout
 When the user unmarks the cell '1-1' with "<Questionable mark>"
 Then the remaining flags counter should show "10"
 And the cell "1-1" shows "nothing"
 
 Scenario: Restarting the game: all cells covered
-Given the user loads the default layout
+Given the user loads the "xxo-xoo-xox" layout
 And the user marks the cell '1-1' with a "<Flag tag>"
 And the user reveals the cell '3-2'
 When the user restart the game
@@ -173,7 +164,7 @@ Then all cells should be covered
 
 @manual
 Scenario: Restarting the game: time resetting
-Given the user loads the default layout
+Given the user loads the "oxx-xxx-xxo" layout
 And the user reveals the cell '1-1'
 And the user waits some seconds
 And the user wants to restart the game
@@ -181,15 +172,27 @@ When the user restart the game
 Then the timer counter should show "0"
 
 Scenario: Restarting the game: flag counter
-Given the user loads the default layout
+Given the user loads the "ooo-xxo-xox" layout
 And the user marks the cell '1-1' with a "<Flag tag>"
 When the user restart the game
 Then the remaining flags counter should show "10"
 
+Scenario: Restarting the game: face button
+Given the user loads the "xxo-xoo-xox" layout
+And the user reveals the cell '2-2'
+When the user restart the game
+Then the face button should be 'normal'
+
 @manual
-Scenario: Time counter starts when user reveals a cell //???? puede empezar tb cuando añado una banderita o un ?
-Given the user loads the default layout
+Scenario: Time counter increasing: User reveals a cell
+Given the user loads the "xox-oox-xxx" layout
 When the user reveals the cell '2-2'
+Then the time counter should start increasing
+
+@manual
+Scenario: Time counter increasing: User marks the cell with Flag tag
+Given the user loads the "xox-oox-xxx" layout
+When the user marks the cell '2-3' with a "<Flag tag>"
 Then the time counter should start increasing
 
 Scenario: Revealing a cell with the mouse

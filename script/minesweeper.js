@@ -2,7 +2,7 @@ const columns = 8;
 const rows = 8;
 let mineCounter = 10;
 
-initGame();
+createBoardFromMockData(mockDataParam(mockdata));
 
 //Toni's functions for validating and parsing the mockdata
 export const parseMockDataToString = (data) => {
@@ -14,6 +14,8 @@ export const parseMockDataToString = (data) => {
     }
     return strData
 }
+
+
 
 //Toni's functions for validating and parsing the mockdata
 export const validateMockData = (data) => {
@@ -50,7 +52,7 @@ const validateMockDataRows = (dataRows) => {
 }
 
 //Toni's functions for validating and creating the board from mock data
-export const createBoardFromMockData = (data) => {
+function createBoardFromMockData(data) {
     const board = []
     let mockBoard = data.split('-')
     mockBoard = mockBoard.map((row) => { return row.split('') })
@@ -74,15 +76,10 @@ export const createBoardFromMockData = (data) => {
     return board
 }
 
-export const loadMockData = async (mockData) => {
-  const text = screen.getElementById('text-mockdata-loader')
-  const button = screen.getElementById('button-mockdata-loader')
-  
-}
-
-function initGame(mockdata){
-    const params = new URLSearchParams(window.location.search);
+function mockDataParam(mockdata){
+    const params = document.getElementById("text-mockdata-loader");
     const mockDataValue = params.get(mockdata);
+    
     if (mockDataValue.includes('-')) {
         mockDataValue = mockDataValue.split("-");
     } else if (mockDataValue.includes (' ')) {
@@ -91,20 +88,3 @@ function initGame(mockdata){
     return mockDataValue;
 }
 
-function create_Table() {
-
-
-    var tabla = document.createElement("table");
-    var thead = document.createElement("thead");
-    var tbody = document.createElement("tbody");
-
-    tabla.appendChild(thead);
-    tabla.appendChild(tbody);
-
-    document.getElementById("minesweeper-board").appendChild(tabla);
-   
-    for (var i = 0; i <= rows; i++) {
-
-    }
-
-}

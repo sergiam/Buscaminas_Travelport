@@ -1,3 +1,4 @@
+/*
 .layout {
     display: grid;
     grid-template-rows: repeat(8, 1fr);
@@ -5,6 +6,7 @@
     gap: 8px;
 
 }
+*/
 
 .minesweeper-board {
   text-align: center;

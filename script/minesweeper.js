@@ -2,89 +2,40 @@ const columns = 8;
 const rows = 8;
 let mineCounter = 10;
 
-createBoardFromMockData(mockDataParam(mockdata));
+const mineField = [];
+minefieldCreation();
+generateTable();
 
-//Toni's functions for validating and parsing the mockdata
-export const parseMockDataToString = (data) => {
-    let strData = data.split(/\r?\n/).join('-')
-    strData = strData.replaceAll(' ', '')
-    strData = strData.replaceAll('|', '')
-    while (strData[strData.length - 1] === '-') {
-      strData = strData.slice(0, -1)
-    }
-    return strData
+//Características de cada casilla (Tablero)
+function minefieldCreation(){
+  for (let i = 0; i < columns; i++){
+      mineField.push([])
+          for (let j = 0; j < rows; j++){
+              mineField[i].push({
+                  mine:false, //mineCounter? 
+                  hidden:true,
+                  num:null
+              })
+          }
+  }
+  
 }
 
-
-
-//Toni's functions for validating and parsing the mockdata
-export const validateMockData = (data) => {
-    let isValidData
-    if (data === undefined) {
-      isValidData = false
-    } else if (data.includes('-')) {
-      isValidData = validateMockDataRows(data.split('-'))
-    } else {
-      isValidData = validateMockDataRow(data)
-    }
-    return isValidData
-}
-
-//Toni's functions for validating and parsing the mockdata
-const validateMockDataRow = (data) => {
-    const newLocal = '^[*o]*$'
-    const regex = new RegExp(newLocal)
-    return regex.test(data)
-}
-
-//Toni's functions for validating and parsing the mockdata
-const validateMockDataRows = (dataRows) => {
-    const currentLenght = dataRows[0].length
-    let isValidData
-    for (let i = 0; i < dataRows.length; i += 1) {
-      if (dataRows[i].length !== currentLenght) {
-        isValidData = false
-        break
+//Tabla sin mockdata, 8x8
+function generateTable(){
+  var table = document.getElementById("board-inside-content");
+  for (let i = 0; i <= columns; i++){
+      var row = document.createElement("tr");
+      row.setAttribute("id","row:"+i);
+      for (let j = 0; j <= rows; j++){
+          var cell = document.createElement("td");
+          var id = "cell:"+i+j;
+          var classCell= "cell";
+          cell.classList.add(classCell);
+          cell.setAttribute("id",id);
+          row.appendChild(cell);
       }
-      isValidData = validateMockDataRow(dataRows[i])
-    }
-    return isValidData
-}
-
-//Toni's functions for validating and creating the board from mock data
-function createBoardFromMockData(data) {
-    const board = []
-    let mockBoard = data.split('-')
-    mockBoard = mockBoard.map((row) => { return row.split('') })
-    for (let row = 0; row < mockBoard.length; row += 1) {
-      board.push([])
-      for (let column = 0; column < mockBoard[0].length; column += 1) {
-        board[row].push({
-          y: row,
-          x: column,
-          isMineExploded: false,
-          isRevealed: false,
-          userTag: '',
-          isWrongTagged: false,
-          numberOfMinesAround: 0,
-          isMine: mockBoard[row][column] === '*'
-        })
-      }
-    }
-    console.log('board', board)
-    minefieldNumbering(board)
-    return board
-}
-
-function mockDataParam(mockdata){
-    const params = document.getElementById("text-mockdata-loader");
-    const mockDataValue = params.get(mockdata);
-    
-    if (mockDataValue.includes('-')) {
-        mockDataValue = mockDataValue.split("-");
-    } else if (mockDataValue.includes (' ')) {
-        mockDataValue = mockDataValue.split(' ')
-    }
-    return mockDataValue;
+      table.appendChild(row);
+  }
 }
 

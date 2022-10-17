@@ -1,3 +1,7 @@
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const mockData = urlParams.get('mockData');
+
 export const parseMockDataToString = (data) => {
     let strData = data.split(/\r?\n/).join('-')
     strData = strData.replaceAll(' ', '')
@@ -68,3 +72,5 @@ export const createBoardFromMockData = (data) => {
     minefieldNumbering(board)
     return board
 }
+
+board = createBoardFromMockData(mockData)

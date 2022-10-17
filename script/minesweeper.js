@@ -21,6 +21,19 @@ function minefieldCreation(){
   
 }
 
+function initGame() {
+    let parametersURL = getURLParams('mockdata');
+    let rows = parametersURL.length;
+    let cols = parametersURL[0].length;
+    minefieldCreation(rows, cols);
+}
+
+function getURLParams(){
+   // Fichero mockdatahelper?
+
+}
+
+
 //Tabla sin mockdata, 8x8
 function generateTable(){
   var table = document.getElementById("board-inside-content");

@@ -10,6 +10,7 @@
 
 .minesweeper-board {
   text-align: center;
+
 }
 
 .top-board-content {
@@ -29,4 +30,10 @@
 #face {
   margin-left: 30px;
   margin-right: 30px;
+}
+
+.cell{
+  width: 30px;
+  height: 30px;
+  background-color: white;
 }

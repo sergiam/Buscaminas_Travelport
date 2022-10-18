@@ -8,15 +8,30 @@
 }
 */
 
+body {
+  background: linear-gradient(2deg, #0e96cc4f, rgba(22, 88, 64, 0.555));
+  
+  
+}
+
+#board-inside-content {
+  margin: auto;
+}
+
 .minesweeper-board {
   text-align: center;
-
 }
 
 .top-board-content {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  border: black 1px solid;
+  height: 50px;
+  width: 400px;
+  background: linear-gradient(2deg, #0e96cc4f, rgba(54, 184, 140, 0.555));
 }
 
 #time-counter{
@@ -30,10 +45,24 @@
 #face {
   margin-left: 30px;
   margin-right: 30px;
+  cursor: pointer;
 }
 
-.cell{
-  width: 30px;
-  height: 30px;
-  background-color: white;
+
+.cellcovered{
+  width: 53px;
+  height: 50px;
+  background: linear-gradient(2deg, #0e96cc4f, rgba(54, 184, 140, 0.555));
+  border: black 1px solid;
+  cursor: pointer;
+}
+
+
+.celluncovered{
+  width: 53px;
+  height: 50px;
+  background-color: #969595;
+  border: black 1px solid;
+  cursor: pointer;
+  font-size: 16px;
 }

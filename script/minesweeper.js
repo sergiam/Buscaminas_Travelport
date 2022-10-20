@@ -1,12 +1,16 @@
 const columns = 8;
 const rows = 8;
-let mineCounter = 10;
+const mineCounter = 10;
+
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
 const mockData = urlParams.get('mockData')
 const mineField = [];
-generateTable();
 
+generateTable();
+addEventClick();
+
+/*
 //Características de cada casilla (Tablero)
 function minefieldCreation(){
   for (let i = 0; i < columns; i++){
@@ -21,6 +25,39 @@ function minefieldCreation(){
   }
   
 }
+*/
+
+function addEventClick() {
+    //var cell = document.createElement("td");
+    let cells = document.getElementsByTagName("td");
+    for (const elements of cells) {
+        elements.addEventListener('click', () => {
+            uncoverCell(elements.getAttribute("id"));
+        });
+        elements.addEventListener('click', () => {
+            showMine(elements.getAttribute("id"));
+        });
+    }
+
+}
+
+function uncoverCell(cellId) {
+    let cell = document.getElementById(cellId);
+    cell.classList.add("celluncovered");
+    cell.classList.remove("cellcovered");
+}
+
+function coverCell(cellId) {
+    let cell = document.getElementById(cellId);
+    cell.classList.add("cellcovered");
+    cell.classList.remove("celluncovered");
+    
+}
+
+function showMine(cellId) {
+        let cells = document.getElementById(cellId);
+        cells.classList.add("mine");
+    }
 
 function getMockDataParams(){
    // Fichero mockdatahelper?

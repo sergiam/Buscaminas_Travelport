@@ -25,17 +25,17 @@ Given a user enters to the page
 
 @current
 Scenario: Revealing cell with a bomb > Game Over
-Given the user loads the layout "xo"
+Given the user loads the mockData "xo"
 When the user presses the cell '1-1'
 Then the user loses the game
 
 Scenario: Winning the game by revealing cells
-Given the user loads the layout "xo"
+Given the user loads the mockData "xo"
 When the user clicks at the cell '1-2'
 Then the user wins
 
 Scenario: Revealing cell with a bomb > Showing the mine [MINED CELL]
-Given the user loads the layout "xo"
+Given the user loads the mockData "xo"
 When the user presses the cell '1-1'
 Then the cell "1-1" should show "mine"
 
@@ -102,11 +102,11 @@ Examples:
 
 
 Scenario: Default display screen: All the cells must be covered
-Given the user loads the default layout
+Given the user loads the default mockData
 Then All the cells should be "covered"
 
 Scenario: Default display screen: Default time counter
-Given the user loads the default layout
+Given the user loads the default mockData
 Then the timer should be "0"
 
 Scenario: Default display screen: Default face

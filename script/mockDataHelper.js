@@ -1,8 +1,10 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const mockData = urlParams.get('mockData');
+console.log(mockData);
+var board = [];
 
-export const parseMockDataToString = (data) => {
+const parseMockDataToString = (data) => {
     let strData = data.split(/\r?\n/).join('-')
     strData = strData.replaceAll(' ', '')
     strData = strData.replaceAll('|', '')
@@ -13,9 +15,8 @@ export const parseMockDataToString = (data) => {
 }
 
 
-
 //Toni's functions for validating and parsing the mockdata
-export const validateMockData = (data) => {
+const validateMockData = (data) => {
     let isValidData
     if (data === undefined) {
       isValidData = false
@@ -49,7 +50,7 @@ const validateMockDataRows = (dataRows) => {
 }
 
 //Toni's functions for validating and creating the board from mock data
-export const createBoardFromMockData = (data) => {
+const createBoardFromMockData = (data) => {
     const board = []
     let mockBoard = data.split('-')
     mockBoard = mockBoard.map((row) => { return row.split('') })
@@ -69,8 +70,6 @@ export const createBoardFromMockData = (data) => {
       }
     }
     console.log('board', board)
-    minefieldNumbering(board)
     return board
 }
 
-board = createBoardFromMockData(mockData)

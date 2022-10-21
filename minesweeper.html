@@ -10,9 +10,10 @@
 <body>
   
   <div class="minesweeper-board">
-    <textarea id="text-mockdata-loader" placeholder="Enter the mockdata:"></textarea>
-    <button id="button-mockdata-loader" onclick="getMockDataParams()">Load</button>
-
+    <form>
+    <textarea name="mockData" id="text-mockdata-loader" placeholder="Enter the mockdata:"></textarea>
+    <button type="submit" id="button-mockdata-loader" onclick="getMockDataParams()">Load</button>
+    </form>
       <div class="top-board-content">
         <div id="time-counter" data-testid="">Time Counter: 0</div>
         <img id="face" src="/img/normal_face.png">
@@ -24,6 +25,7 @@
   </div>
 
   <script src= "script/minesweeper.js"></script>
+  <script src= "script/mockDataHelper.js"></script>
 
 </body>
 

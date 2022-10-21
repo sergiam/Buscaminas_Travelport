@@ -2,12 +2,7 @@ const columns = 8;
 const rows = 8;
 const mineCounter = 10;
 
-const queryString = window.location.search
-const urlParams = new URLSearchParams(queryString)
-const mockData = urlParams.get('mockData')
 const mineField = [];
-
-generateTable();
 addEventClick();
 
 /*
@@ -27,12 +22,30 @@ function minefieldCreation(){
 }
 */
 
+document.addEventListener('DOMContentLoaded', () => 
+{
+    if(window.location.search.includes('?')){
+        console.log("mockData detected");
+        board = createBoardFromMockData(mockData);
+        console.log(board);
+        generateTable(board.length,board.length);
+        addEventClick();
+        
+    }else{
+//        minefieldCreation();
+        console.log("no mockData")
+        generateTable(columns,rows);
+        addEventClick();
+    }
+})
+
 function addEventClick() {
     //var cell = document.createElement("td");
     let cells = document.getElementsByTagName("td");
     for (const elements of cells) {
         elements.addEventListener('click', () => {
             uncoverCell(elements.getAttribute("id"));
+            console.log(elements.getAttribute("id"));
         });
         elements.addEventListener('click', () => {
             showMine(elements.getAttribute("id"));
@@ -55,28 +68,25 @@ function coverCell(cellId) {
 }
 
 function showMine(cellId) {
-        let cells = document.getElementById(cellId);
-        cells.classList.add("mine");
-    }
+    let cells = document.getElementById(cellId);
+    cells.classList.add("mine");
+    defeat();
+}
 
-function getMockDataParams(){
-   // Fichero mockdatahelper?
-   let parametersURL = document.getElementById('text-mockdata-loader')
-   let rows = parametersURL.length;
-   let cols = parametersURL[0].length;
-   minefieldCreation(rows, cols);
+function defeat(cellId) {
+    console.log("perdiste");
 }
 
 
 //Tabla sin mockdata, 8x8
-function generateTable(){
+function generateTable(height,width){
   var table = document.getElementById("board-inside-content");
-  for (let i = 0; i < columns; i++){
+  for (let i = 0; i < height; i++){
       var row = document.createElement("tr");
       row.setAttribute("id","row:"+i);
-      for (let j = 0; j < rows; j++){
+      for (let j = 0; j < width; j++){
           var cell = document.createElement("td");
-          var id = "cell:"+i+j;
+          var id =i+"-"+j;
           var classCell= "cellcovered";
           cell.classList.add(classCell);
           cell.setAttribute("id",id);

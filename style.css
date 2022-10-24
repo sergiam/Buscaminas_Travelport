@@ -78,3 +78,11 @@ body {
   background-image: url('/img/mine.png');
   background-repeat: no-repeat;
 }
+
+.minetag {
+  position: relative;
+  background-position: center;
+  background-size: 40px;
+  background-image: url('/img/bandera.png');
+  background-repeat: no-repeat;
+}

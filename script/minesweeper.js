@@ -2,7 +2,8 @@ const columns = 8;
 const rows = 8;
 const mineCounter = 10;
 
-const mineField = [];
+
+//const mineField = [];
 addEventClick();
 
 /*
@@ -54,10 +55,17 @@ function addEventClick() {
 
 }
 
-function uncoverCell(cellId) {
-    let cell = document.getElementById(cellId);
+function uncoverCell(CellId) {
+    let cell = document.getElementById(CellId);
+    let row = CellId[0];
+    let lootro = CellId[2];
+
+   
+    board[row][lootro].isRevealed = true;
     cell.classList.add("celluncovered");
     cell.classList.remove("cellcovered");
+
+
 }
 
 function coverCell(cellId) {
@@ -69,12 +77,28 @@ function coverCell(cellId) {
 
 function showMine(cellId) {
     let cells = document.getElementById(cellId);
+    nigger
     cells.classList.add("mine");
     defeat();
 }
 
 function defeat(cellId) {
-    console.log("perdiste");
+   for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board.height; j++) {
+            if (board[i][j].isMine) {
+
+                let cell = document.getElementById(cellId)
+
+                if (board[i][j].isRevealed == true && board[i][j].isMine === '*') {
+                cell.setAttribute("disabled", true);
+                }
+                
+                cell.classList.add("celluncovered");
+                cell.classList.remove("cellcovered");
+                cell.classList.add("mine");
+            }
+        }
+    }
 }
 
 

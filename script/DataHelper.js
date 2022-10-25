@@ -4,6 +4,8 @@ const mockData = urlParams.get('mockData');
 console.log(mockData);
 var board = [];
 
+
+/*
 const parseMockDataToString = (data) => {
     let strData = data.split(/\r?\n/).join('-')
     strData = strData.replaceAll(' ', '')
@@ -48,6 +50,7 @@ const validateMockDataRows = (dataRows) => {
     }
     return isValidData
 }
+*/
 
 //Toni's functions for validating and creating the board from mock data
 const createBoardFromMockData = (data) => {
@@ -73,3 +76,74 @@ const createBoardFromMockData = (data) => {
     return board
 }
 
+
+const createBoard = () => {
+  const board = []
+
+  for (let row = 0; row < rows; row += 1) {
+    board.push([])
+    for (let column = 0; column < columns; column += 1) {
+      board[row].push({
+        y: row,
+        x: column,
+        isRevealed: false,
+        userTag: '',
+        numberOfMinesAround: 0,
+        isMine: false
+      })
+    }
+  }
+  console.log('board', board)
+  return board
+}
+
+function setRandomMines() {
+    for (let i = 0; i < 10; i++) {
+      let row = Math.floor(Math.random() * 8);
+      let column = Math.floor(Math.random() * 8);
+      if (board[row][column].isMine == true) {
+        i--;
+      } else {
+      board[row][column].isMine = true;
+    }
+  }
+}
+
+function minesAround(row,column) {
+    let mines = 0;
+    row = parseInt(row);
+    column = parseInt(column);
+
+  if (column < (board[row].length -1)) {
+  
+    if (board[row][(column + 1)].isMine == true) mines++;
+  }
+  
+  if (column > 0) { 
+    if (board[row][(column - 1)].isMine == true) mines++;
+  }
+
+  if (row > 0) {
+    if (board[(row - 1)][(column)].isMine == true) mines++;
+
+      if (column < (board[row].length -1)) {
+        if (board[(row - 1)][(column + 1)].isMine == true) mines++;
+      }
+      if (column > 0) { 
+        if (board[(row - 1)][(column - 1)].isMine == true) mines++;
+      }
+  } 
+  if (row < board.length -1) {
+    if (board[(row + 1)][column].isMine == true) mines++;
+
+      if (column > 0) { 
+        if (board[(row + 1)][(column - 1)].isMine == true) mines++;
+      }
+
+      if (column < (board[row].length -1)) {
+        if (board[(row + 1)][(column + 1)].isMine == true) mines++;
+    }
+  }
+  board[row][column].numberOfMinesAround = mines;
+  return mines;
+}

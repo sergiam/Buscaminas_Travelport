@@ -30,12 +30,13 @@ document.addEventListener('DOMContentLoaded', () =>
         board = createBoardFromMockData(mockData);
         console.log(board);
         generateTable(board.length,board.length);
-        addEventClick();
-        
+        addEventClick();  
     }else{
 //        minefieldCreation();
         console.log("no mockData")
+        board = createBoard(columns,rows);
         generateTable(columns,rows);
+        setRandomMines();
         addEventClick();
     }
 })
@@ -46,26 +47,20 @@ function addEventClick() {
     for (const elements of cells) {
         elements.addEventListener('click', () => {
             uncoverCell(elements.getAttribute("id"));
-            console.log(elements.getAttribute("id"));
-        });
-        elements.addEventListener('click', () => {
-            showMine(elements.getAttribute("id"));
+            
         });
     }
-
 }
 
-function uncoverCell(CellId) {
-    let cell = document.getElementById(CellId);
-    let row = CellId[0];
-    let lootro = CellId[2];
+function uncoverCell(cellId) {
+    let cell = document.getElementById(cellId);
+    let row = cellId[0];
+    let column = cellId[2];
+    board[row][column].isRevealed = true;
+    showCell(cellId);
 
-   
-    board[row][lootro].isRevealed = true;
     cell.classList.add("celluncovered");
     cell.classList.remove("cellcovered");
-
-
 }
 
 function coverCell(cellId) {
@@ -75,12 +70,24 @@ function coverCell(cellId) {
     
 }
 
-function showMine(cellId) {
+function showCell(cellId) { 
     let cells = document.getElementById(cellId);
-    nigger
-    cells.classList.add("mine");
+    let row = cellId[0];
+    let column = cellId[2];
+    if (board[row][column].isMine == true) {
+        cells.classList.add("mine")
+    } else {
+        let minesaround = minesAround(row,column);
+        if (minesaround != 0) {
+            cells.innerText = minesaround;
+        } else {
+            
+        }
+    }
+
     defeat();
 }
+
 
 function defeat(cellId) {
    for (let i = 0; i < board.length; i++) {

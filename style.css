@@ -85,4 +85,5 @@ body {
   background-size: 40px;
   background-image: url('/img/bandera.png');
   background-repeat: no-repeat;
+  background-color: red;
 }

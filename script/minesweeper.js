@@ -13,6 +13,17 @@ document.addEventListener("DOMContentLoaded", () =>  {
 
 function startGame() {
     if (window.location.search.includes("?")) {
+        let url = mockData;
+        let minesMockData = 0;
+        for (let i = 0; i < url.length; i++) {
+          if (url[i].includes("*")) {
+            minesMockData++;
+          }
+        }
+        mineCounter = minesMockData;
+        document.getElementById("mine-counter").innerText = "Mine Counter: " + mineCounter;
+
+
         board = createBoardFromMockData(mockData);
         generateTable(board.length, board[0].length);
         addEventClick();
@@ -108,6 +119,7 @@ function uncoverCell(cellId) {
   let row = cellId[0];
   let column = cellId[2];
   board[row][column].isRevealed = true;
+  cell.classList.remove("minetag");
   showCell(cellId);
 
   cell.classList.add("celluncovered");

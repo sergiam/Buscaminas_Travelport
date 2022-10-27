@@ -2,9 +2,9 @@ Feature: Minesweeper
 
   '
     empty cell: "o"
-    cell with mine: "x"
+    cell with mine: "*"
 
-    Hidden cell: "o" > "_"
+    Hidden cell: "_"
     Flag tag: "!"
     Questionable tag: "?"
     Row "-"
@@ -23,140 +23,147 @@ Feature: Minesweeper
 Background:
 Given a user enters to the page
 
-@current
+
 Scenario: Revealing cell with a bomb > Game Over
-Given the user loads the mockData "xo"
+Given the user loads the mockData "*o"
 When the user presses the cell '1-1'
 Then the user loses the game
 
 Scenario: Winning the game by revealing cells
-Given the user loads the mockData "xo"
+Given the user loads the mockData "*o"
 When the user clicks at the cell '1-2'
 Then the user wins
 
+@done
 Scenario: Revealing cell with a bomb > Showing the mine [MINED CELL]
-Given the user loads the mockData "xo"
-When the user presses the cell '1-1'
-Then the cell "1-1" should show "mine"
+Given the user loads the mockData "*o"
+When the user reveals the cell '0-0'
+Then the cell "0-0" should show "mine"
 
+@done
 Scenario: Default display screen: bomb counter
-Given the user loads the "<defaultLayout>"
+Given the user loads the mockData "<defaultLayout>"
 Then the bomb counter should be "<number>"
 
 Examples:
 |  defaultLayout  | number      |
-|   xoo-ooo-ooo   | 1           |
-|   xxo-oxo-ooo   | 3           |
-|   xxo-oxx-xoo   | 5           |
-|   xxx-oxx-xxx   | 8           |
+|   *oo-ooo-ooo   | Mine Counter: 1           |
+|   **o-o*o-ooo   | Mine Counter: 3           |
+|   **o-o**-*oo   | Mine Counter: 5           |
+|   ***-o**-***   | Mine Counter: 8           |
 
+@done
 Scenario: Clicking a cell without a bomb, showing number of surrounding mines [NUM CELL]
-Given the user loads the "<defaultLayout>"
-When the user reveals the cell "2-2"
-Then the cell "2-2" should show "number"
+Given the user loads the mockData "<defaultLayout>"
+When the user reveals the cell "1-1"
+Then the cell "1-1" must show "<number>"
 
 Examples:
 |  defaultLayout  | number      |
-|   xoo-ooo-ooo   | 1           |
-|   xxo-xox-ooo   | 4           |
-|   xxo-xox-oxo   | 5           |
-|   xxo-xxx-oxx   | 7           |
-|   xxx-xox-xxx   | 8           |
+|   *oo-ooo-ooo   | 1           |
+|   **o-*o*-ooo   | 4           |
+|   **o-*o*-o*o   | 5           |
+|   ***-*o*-o**   | 7           |
+|   ***-*o*-***   | 8           |
 
+@done
 Scenario: Cell without mine and without surrounding mines > Empty cell [EMPTY CELL]
-Given the user loads the "ooo-ooo-ooo" layout
+Given the user loads the mockData "ooo-ooo-ooo"
 When the user reveals the cell "2-2"
-Then the cell "2-2" should be "empty"
+Then the cell "2-2" must show ""
 
 #Scenario Outline: Revealing an empty cell > Revealing the surrounding cells
 #Given the user loads the "<defaultLayout>"
 #When the user clicks the cell "<cell>"
 #Then should show the "<output>"
 
-#Examples:
+#E*amples:
 #|  defaultLayout  | cell | output       |
-#|   xoo-ooo-ooo   | 1-2  | ooo-1oo-ooo  |
-#|   xxo-ooo-ooo   | 1-2  | ooo-2oo-ooo  |
-#|   xxx-ooo-ooo   | 1-2  | ooo-3oo-ooo  |
-#|   xxx-oxo-ooo   | 1-2  | ooo-4oo-ooo  |
-#|   xxx-xox-ooo   | 2-2  | ooo-o5o-ooo  |
-#|   xxx-xox-xoo   | 2-2  | ooo-o6o-ooo  |
-#|   xxx-xxx-xoo   | 3-2  | ooo-ooo-o7o  |
-#|   xxx-xxx-xox   | 3-2  | ooo-ooo-o8o  |
+#|   *oo-ooo-ooo   | 1-2  | ooo-1oo-ooo  |
+#|   **o-ooo-ooo   | 1-2  | ooo-2oo-ooo  |
+#|   ***-ooo-ooo   | 1-2  | ooo-3oo-ooo  |
+#|   ***-o*o-ooo   | 1-2  | ooo-4oo-ooo  |
+#|   ***-*o*-ooo   | 2-2  | ooo-o5o-ooo  |
+#|   ***-*o*-*oo   | 2-2  | ooo-o6o-ooo  |
+#|   ***-***-*oo   | 3-2  | ooo-ooo-o7o  |
+#|   ***-***-*o*   | 3-2  | ooo-ooo-o8o  |
 
-
+@done
 Scenario Outline: Revealing an empty cell > Revealing the surrounding cells
-Given the user loads the "<defaultLayout>"
-When the user clicks the cell "<cell>"
+Given the user loads the mockData "<defaultLayout>"
+When the user reveals the cell "<cell>"
 Then should show the "<output>"
 
 Examples:
 |  defaultLayout                    | cell | output                         |
 |   ooo-ooo-ooo                     | 2-2  | ...-...-...                    |
-|   xxxxx-xooox-xooox-xooox-xxxxx   | 3-3  | .....-.555.-.5.5.-.555.-.....  |
-|   xooo-oooo-oooo-oooo             | 4-4  | .1..-11..-....-....            |
-|   xoo-xxo-ooo                     | 2-3  | ...-..3-...                    |
+|   *o*oo-ooooo-ooooo-ooooo-ooooo   | 4-3  | ___..-.....-.....-.....-.....  |
 
 
 #Scenario: An empty cell is revealead by a neighbour > Revealing again adjacent mines
 
-
+@done
 Scenario: Default display screen: All the cells must be covered
-Given the user loads the default mockData
-Then All the cells should be "covered"
+Given the user loads the mockData 'ooo'
+Then should show the "___"
 
+@done
 Scenario: Default display screen: Default time counter
-Given the user loads the default mockData
 Then the timer should be "0"
 
+@done
 Scenario: Default display screen: Default face
 Then the face should be 'normal face'
 
+@done
 Scenario: Winning game > Smile face
-Given the user wins the game
-Then the face should be 'smile face'
+Given the user loads the mockData 'o*'
+When the user reveals the cell '0-0'
+Then the face should be 'happy face'
 
+@done
 Scenario: Sad face
-Given the user lose the game
+Given the user loads the mockData 'o*'
+When the user reveals the cell '0-1'
 Then the face should be 'sad face'
 
+@done
 Scenario: Reseting the game with face button
-Given the user loads the "xxo-oox-xxx" layout
-When the user reveals the cell '2-1'
+Given the user loads the mockData "**o-oo*-***" 
+When the user reveals the cell '1-1'
 And clicks the "face" button
-Then the game should be reset
+Then should show the "___-___-___"
 
-Scenario: Restarting the game when user already lost
-Given the user lost
-When the user clicks the 'sad face' button
-Then the game restarts
-
+@done
 Scenario: tagging Flag tag
-Given the user loads the "oox-xxo-xoo" layout
-When the user marks the cell '1-1' with "<Flag tag>"
-Then the remaining flags counter should show "9"
-And the cell '1-1' shows "<Flag tag>"
+Given the user loads the mockData "oo*-**o-*oo"
+When the user marks the cell '1-1' with "Flag tag"
+Then the bomb counter should be "Mine Counter: 3"
+And the cell '1-1' shows "minetag"
 
+@done
 Scenario: untagging Flag tag
-Given the user loads the "oox-xxo-xoo" layout
-When the user unmarks the cell '1-1' with "<Flag tag>"
-Then the remaining flags counter should show "10"
-And the cell '1-1' shows "nothing"
+Given the user loads the mockData "oo*-**o-*oo"
+When the user unmarks the cell '1-1' with "Flag tag"
+Then the bomb counter should be "Mine Counter: 4"
+And the cell '1-1' shows "Questionable mark"
 
+@done
 Scenario: tagging questionable mark
-Given the user loads the "oox-xxo-xoo" layout
-When the user marks the cell '1-1' with "<Questionable mark>"
-Then the remaining flags counter should show "10"
-And the cell '1-1' shows "<Questionable mark>"
+Given the user loads the mockData "oo*-**o-*oo"
+When the user marks the cell '1-1' with "Questionable mark"
+Then the bomb counter should be "Mine Counter: 4"
+And the cell '1-1' shows "Questionable mark"
 
+@done
 Scenario: unTagging questionable mark
-Given the user loads the "oox-xxo-xoo" layout
-When the user unmarks the cell '1-1' with "<Questionable mark>"
-Then the remaining flags counter should show "10"
+Given the user loads the mockData "oo*-**o-*oo"
+When the user unmarks the cell '1-1' with "Questionable mark"
+Then the bomb counter should be "Mine Counter: 4"
 And the cell "1-1" shows "nothing"
 
 Scenario: Restarting the game: all cells covered
-Given the user loads the "xxo-xoo-xox" layout
+Given the user loads the "**o-*oo-*o*" layout
 And the user marks the cell '1-1' with a "<Flag tag>"
 And the user reveals the cell '3-2'
 When the user restart the game
@@ -164,34 +171,34 @@ Then all cells should be covered
 
 @manual
 Scenario: Restarting the game: time resetting
-Given the user loads the "oxx-xxx-xxo" layout
-And the user reveals the cell '1-1'
+Given the user loads the "o**-***-**o" layout
+And the user reveals the cell '0-0'
 And the user waits some seconds
 And the user wants to restart the game
 When the user restart the game
 Then the timer counter should show "0"
 
 Scenario: Restarting the game: flag counter
-Given the user loads the "ooo-xxo-xox" layout
+Given the user loads the "ooo-**o-*o*" layout
 And the user marks the cell '1-1' with a "<Flag tag>"
 When the user restart the game
 Then the remaining flags counter should show "10"
 
 Scenario: Restarting the game: face button
-Given the user loads the "xxo-xoo-xox" layout
-And the user reveals the cell '2-2'
+Given the user loads the "**o-*oo-*o*" layout
+And the user reveals the cell '2-1'
 When the user restart the game
 Then the face button should be 'normal'
 
 @manual
 Scenario: Time counter increasing: User reveals a cell
-Given the user loads the "xox-oox-xxx" layout
-When the user reveals the cell '2-2'
+Given the user loads the "*o*-oo*-***" layout
+When the user reveals the cell '1-1'
 Then the time counter should start increasing
 
 @manual
 Scenario: Time counter increasing: User marks the cell with Flag tag
-Given the user loads the "xox-oox-xxx" layout
+Given the user loads the "*o*-oo*-***" layout
 When the user marks the cell '2-3' with a "<Flag tag>"
 Then the time counter should start increasing
 
@@ -199,6 +206,7 @@ Scenario: Revealing a cell with the mouse
 When the user presses left mouse button on the cell
 Then the cell should be "revealed"
 
+@todo
 Scenario: Showing bombs when user loses the game
 Given the user loads the "<inputLayout>" layout
 When the user reveals the cell "3-3"
@@ -206,10 +214,10 @@ Then the display should show "<outputLayout>"
 
 Examples:
 | inputLayout | outputLayout |
-| xoo-oxx-oox | x..-.xx-..x  |
-| xxx-xoo-oxx | xxx-x..-.xx  |
-| xox-xxx-xxx | x.x-xxx-xxx  |
-| xxx-ooo-xxx | xxx-...-xxx  |
+| *oo-o**-oo* | *..-.**-..*  |
+| ***-*oo-o** | ***-*..-.**  |
+| *o*-***-*** | *.*-***-***  |
+| ***-ooo-*** | ***-...-***  |
 
 #Scenario: Revealing an empty cell (neighbours)
 #Definition of an empty cell
